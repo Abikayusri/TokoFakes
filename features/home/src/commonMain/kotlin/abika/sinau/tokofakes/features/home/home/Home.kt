@@ -5,6 +5,8 @@ import abika.sinau.tokofakes.apis.product.model.ProductList
 import abika.sinau.tokofakes.libraries.core.LocalAppConfig
 import abika.sinau.tokofakes.libraries.core.state.Async
 import abika.sinau.tokofakes.libraries.core.viewmodel.rememberViewModel
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -14,11 +16,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 
 @Composable
-fun Home() {
+fun Home(
+    onItemClick: (ProductList) -> Unit,
+) {
     val appConfig = LocalAppConfig.current
     val productRepository = remember { ProductRepository(appConfig) }
     val homeViewModel = rememberViewModel { HomeViewModel(productRepository) }
@@ -68,7 +73,9 @@ fun Home() {
 
             is Async.Success -> {
                 items(productList.data) {
-                    ProductListItem(it)
+                    ProductListItem(it) { product ->
+                        onItemClick.invoke(product)
+                    }
                 }
             }
 
@@ -78,8 +85,14 @@ fun Home() {
 }
 
 @Composable
-fun ProductListItem(productList: ProductList) {
-    Text(
-        text = productList.name
-    )
+fun ProductListItem(productList: ProductList, onClickItem: (ProductList) -> Unit) {
+    Column(
+        modifier = Modifier.clickable {
+            onClickItem.invoke(productList)
+        }
+    ) {
+        Text(
+            text = productList.name
+        )
+    }
 }

@@ -44,8 +44,11 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation(projects.apis.product)
-            implementation(projects.features.home)
             implementation(projects.libraries.core)
+            implementation(projects.features.home)
+            implementation(projects.features.productdetail)
+
+            implementation(libs.precompose)
         }
     }
 }

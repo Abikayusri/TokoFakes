@@ -21,7 +21,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "home"
+            baseName = "productdetail"
             isStatic = true
         }
     }
@@ -31,7 +31,6 @@ kotlin {
             //put your multiplatform dependencies here
             implementation(projects.apis.product)
             implementation(projects.libraries.core)
-            implementation(projects.features.productdetail)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -51,7 +50,7 @@ kotlin {
 }
 
 android {
-    namespace = "abika.sinau.tokofakes.features.home"
+    namespace = "abika.sinau.tokofakes.productdetail"
     compileSdk = 34
     defaultConfig {
         minSdk = 24
