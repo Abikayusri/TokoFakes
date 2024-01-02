@@ -1,4 +1,4 @@
-package abika.sinau.tokofakes.features.home.state
+package abika.sinau.tokofakes.features.home.home
 
 import abika.sinau.tokofakes.apis.product.model.ProductList
 import abika.sinau.tokofakes.libraries.core.state.Async

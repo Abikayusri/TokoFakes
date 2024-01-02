@@ -23,7 +23,7 @@ actual abstract class ViewModelPlatform {
 }
 
 @Composable
-actual fun <T : ViewModel<*>> rememberViewModel(isRetain: Boolean, viewModel: () -> T): T {
+actual fun <T : ViewModel<*, *>> rememberViewModel(isRetain: Boolean, viewModel: () -> T): T {
     val host = LocalViewModelHost.current
     val vm = remember {
         if (isRetain) {

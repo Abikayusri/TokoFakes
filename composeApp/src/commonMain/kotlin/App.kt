@@ -2,7 +2,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
-import abika.sinau.tokofakes.features.home.component.Home
+import abika.sinau.tokofakes.features.home.home.Home
 import abika.sinau.tokofakes.libraries.core.AppConfig
 import abika.sinau.tokofakes.libraries.core.LocalAppConfig
 import abika.sinau.tokofakes.libraries.core.viewmodel.LocalViewModelHost

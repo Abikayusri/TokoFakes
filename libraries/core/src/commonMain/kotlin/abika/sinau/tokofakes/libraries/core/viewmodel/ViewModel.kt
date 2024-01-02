@@ -1,5 +1,6 @@
 package abika.sinau.tokofakes.libraries.core.viewmodel
 
+import abika.sinau.tokofakes.libraries.core.state.Intent
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,9 +13,11 @@ expect abstract class ViewModelPlatform() {
     fun cleared()
 }
 
-abstract class ViewModel<S: Any>(initialState: S) : ViewModelPlatform() {
+abstract class ViewModel<S: Any, I: Intent>(initialState: S) : ViewModelPlatform() {
     private val _uiState: MutableStateFlow<S> = MutableStateFlow(initialState)
     val uiState: StateFlow<S> get() = _uiState
+
+    abstract fun sendIntent(intent: Intent)
 
     protected fun updateUiState(block: S.() -> S) {
         _uiState.update(block)
@@ -22,7 +25,7 @@ abstract class ViewModel<S: Any>(initialState: S) : ViewModelPlatform() {
 }
 
 @Composable
-expect fun <T : ViewModel<*>> rememberViewModel(
+expect fun <T : ViewModel<*, *>> rememberViewModel(
     isRetain: Boolean = true,
     viewModel: () -> T,
 ): T

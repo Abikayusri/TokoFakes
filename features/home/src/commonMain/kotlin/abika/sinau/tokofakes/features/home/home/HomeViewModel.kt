@@ -1,16 +1,15 @@
-package abika.sinau.tokofakes.features.home.viewmodel
+package abika.sinau.tokofakes.features.home.home
 
 import abika.sinau.tokofakes.apis.product.ProductRepository
-import abika.sinau.tokofakes.apis.product.model.ProductList
-import abika.sinau.tokofakes.features.home.state.HomeState
+import abika.sinau.tokofakes.libraries.core.state.Intent
 import abika.sinau.tokofakes.libraries.core.viewmodel.ViewModel
-import abika.sinau.tokofakes.libraries.core.viewmodel.ViewModelPlatform
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val productRepository: ProductRepository) : ViewModel<HomeState>(HomeState()) {
+class HomeViewModel(private val productRepository: ProductRepository) : ViewModel<HomeState, HomeIntent>(
+    HomeState()
+) {
 
 //    val productList = MutableStateFlow<List<ProductList>>(emptyList())
 
@@ -32,6 +31,18 @@ class HomeViewModel(private val productRepository: ProductRepository) : ViewMode
     fun updateName(name: String) = viewModelScope.launch {
         updateUiState {
             copy(name = name)
+        }
+    }
+
+    override fun sendIntent(intent: Intent) {
+        when(intent) {
+            is HomeIntent.SetName -> {
+               updateName(intent.name)
+            }
+
+            is HomeIntent.GetProductList -> {
+                getProductList()
+            }
         }
     }
 }

@@ -1,8 +1,7 @@
-package abika.sinau.tokofakes.features.home.component
+package abika.sinau.tokofakes.features.home.home
 
 import abika.sinau.tokofakes.apis.product.ProductRepository
 import abika.sinau.tokofakes.apis.product.model.ProductList
-import abika.sinau.tokofakes.features.home.viewmodel.HomeViewModel
 import abika.sinau.tokofakes.libraries.core.LocalAppConfig
 import abika.sinau.tokofakes.libraries.core.state.Async
 import abika.sinau.tokofakes.libraries.core.viewmodel.rememberViewModel
@@ -29,8 +28,14 @@ fun Home() {
     val homeState by homeViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        homeViewModel.updateName("Abika")
-        homeViewModel.getProductList()
+//        homeViewModel.updateName("Abika")
+//        homeViewModel.getProductList()
+        homeViewModel.sendIntent(
+            HomeIntent.SetName("Abika"),
+        )
+        homeViewModel.sendIntent(
+            HomeIntent.GetProductList
+        )
     }
 
     LazyColumn {
