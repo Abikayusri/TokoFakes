@@ -32,6 +32,7 @@ fun ProductItem(
     onItemClick: (ProductItem) -> Unit,
 ) {
     val imagePainter = rememberImagePainter(productItem.image)
+//    val imagePainter = rememberAsyncImagePainter(productItem.image)
 
     Card(
         modifier = Modifier.padding(6.dp)
@@ -61,6 +62,16 @@ fun ProductItem(
                         .clip(RoundedCornerShape(topEnd = 6.dp, topStart = 6.dp)),
                     contentScale = ContentScale.Crop
                 )
+
+//                AsyncImage(
+//                    model = ImageRequest.Builder(LocalPlatformContext.current)
+//                        .data(productItem.image)
+//                        .build(),
+//                    contentDescription = null,
+//                    modifier = Modifier.fillMaxSize()
+//                        .clip(RoundedCornerShape(topEnd = 6.dp, topStart = 6.dp)),
+//                    contentScale = ContentScale.Crop
+//                )
 
                 Text(
                     text = productItem.rating.toString(),
