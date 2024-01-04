@@ -21,7 +21,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "home"
+            baseName = "component"
             isStatic = true
         }
     }
@@ -31,8 +31,6 @@ kotlin {
             //put your multiplatform dependencies here
             implementation(projects.apis.product)
             implementation(projects.libraries.core)
-            implementation(projects.libraries.component)
-            implementation(projects.features.productdetail)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -40,6 +38,7 @@ kotlin {
             implementation(compose.ui)
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
+            implementation(libs.imageLoader)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -52,7 +51,7 @@ kotlin {
 }
 
 android {
-    namespace = "abika.sinau.tokofakes.features.home"
+    namespace = "abika.sinau.tokofakes.libraries.component"
     compileSdk = 34
     defaultConfig {
         minSdk = 24

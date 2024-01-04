@@ -1,4 +1,4 @@
-package abika.sinau.tokofakes.apis.product.model
+package abika.sinau.tokofakes.apis.product.model.productlist
 
 
 import kotlinx.serialization.SerialName

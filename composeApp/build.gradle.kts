@@ -93,5 +93,6 @@ buildkonfig {
     // default config is required
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://marketfake.fly.dev/")
+        buildConfigField(FieldSpec.Type.STRING, "APP_NAME", "Toko Online Fakes")
     }
 }

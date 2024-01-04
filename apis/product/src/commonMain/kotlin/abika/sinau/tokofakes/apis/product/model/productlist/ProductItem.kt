@@ -1,4 +1,6 @@
-package abika.sinau.tokofakes.apis.product.model
+package abika.sinau.tokofakes.apis.product.model.productlist
+
+import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
 
 //{
 //    "id": 36,
@@ -16,10 +18,12 @@ package abika.sinau.tokofakes.apis.product.model
 //}
 
 
-data class ProductList(
+data class ProductItem(
     val id: Int,
     val name: String,
     val price: Double,
-//    val image: String,
-//    val discount: Int
+    val rating: Double,
+    val image: String,
+    val discount: Int,
+    val category: CategoryItem,
 )

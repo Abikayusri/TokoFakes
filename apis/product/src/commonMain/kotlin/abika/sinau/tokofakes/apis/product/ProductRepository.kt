@@ -1,8 +1,10 @@
 package abika.sinau.tokofakes.apis.product
 
 import abika.sinau.tokofakes.apis.product.model.Mapper
-import abika.sinau.tokofakes.apis.product.model.ProductList
-import abika.sinau.tokofakes.apis.product.model.ProductListResponse
+import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
+import abika.sinau.tokofakes.apis.product.model.category.CategoryResponse
+import abika.sinau.tokofakes.apis.product.model.productlist.ProductItem
+import abika.sinau.tokofakes.apis.product.model.productlist.ProductListResponse
 import abika.sinau.tokofakes.libraries.core.AppConfig
 import abika.sinau.tokofakes.libraries.core.repository.BaseRepository
 import abika.sinau.tokofakes.libraries.core.state.Async
@@ -14,45 +16,34 @@ class ProductRepository(
     private val dataSources by lazy {
         ProductDataSources(appConfig)
     }
+    fun getAppName() = appConfig.appName
 
-    //    suspend fun getProductList(): Flow<List<ProductList>> {
-    suspend fun getProductList(): Flow<Async<List<ProductList>>> {
-//        val data = dataSources.getProductList().body<ProductListResponse>().let {
-//            Mapper.mapResponseToList(it)
-//        }
+    fun getCategoryList(): Flow<Async<List<CategoryItem>>> {
+        return suspend {
+            dataSources.getCategoryList()
+        }.reduce<CategoryResponse, List<CategoryItem>> { response ->
+            val responseData = response.data
+            if (responseData.isNullOrEmpty()) {
+                val throwable = Throwable("Category is Empty")
+                Async.Failure(throwable)
+            } else {
+                val data = Mapper.mapResponseToCategoryList(response)
+                Async.Success(data)
+            }
+        }
+    }
 
-        return suspend { dataSources.getProductList() }.reduce<ProductListResponse, List<ProductList>> { response ->
+    fun getProductList(query: String): Flow<Async<List<ProductItem>>> {
+
+        return suspend { dataSources.getProductList(query) }.reduce<ProductListResponse, List<ProductItem>> { response ->
             val responseData = response.data
             if (responseData.isNullOrEmpty()) {
                 val throwable = Throwable("Product is Empty")
                 Async.Failure(throwable)
             } else {
-                val data = Mapper.mapResponseToList(response)
+                val data = Mapper.mapResponseToProductList(response)
                 Async.Success(data)
             }
         }
-
-//        return flow {
-//            emit(data)
-//        }
     }
-
-//    fun getProductList(): Flow<List<ProductList>> {
-//        return flow {
-//            emit(
-//                listOf(
-//                    ProductList(
-//                        id = 1,
-//                        name = "Meja",
-//                        price = 3000.0
-//                    ),
-//                    ProductList(
-//                        id = 2,
-//                        name = "Kursi",
-//                        price = 4000.0
-//                    ),
-//                )
-//            )
-//        }
-//    }
 }

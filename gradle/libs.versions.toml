@@ -23,6 +23,7 @@ ktor = "2.3.7"
 kotlin-serialization = "1.6.0"
 buildKonfig = "0.15.1"
 precompose = "1.5.10"
+imageLoader = "1.7.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -57,6 +58,7 @@ precompose = { module = "moe.tlaster:precompose", version.ref = "precompose"}
 precompose-molecule = { module = "moe.tlaster:precompose-molecule", version.ref = "precompose"}
 precompose-viewmodel = { module = "moe.tlaster:precompose-viewmodel", version.ref = "precompose"}
 precompose-koin = { module = "moe.tlaster:precompose-koin", version.ref = "precompose"}
+imageLoader = { module = "io.github.qdsfdhvh:image-loader", version.ref = "imageLoader"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
