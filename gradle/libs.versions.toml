@@ -22,6 +22,7 @@ android-lifecycle = "2.6.2"
 ktor = "2.3.7"
 kotlin-serialization = "1.6.0"
 buildKonfig = "0.15.1"
+precompose = "1.5.10"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -52,6 +53,7 @@ ktor-client-serialization = { module = "io.ktor:ktor-serialization-kotlinx-json"
 ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 kotlin-serialization-json = { module = "org.jetbrains.kotlin:kotlinx-serialization-json", version.ref = "kotlin-serialization" }
 buildKonfig = { module = "com.codinggeline.buildkonfig:buildkonfig-gradle-plugin", version.ref = "buildKonfig" }
+precompose = { module = "moe.tlaster:precompose-molecule", version.ref = "precompose"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
