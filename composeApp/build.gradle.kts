@@ -49,7 +49,7 @@ kotlin {
             implementation(projects.features.productdetail)
 
 //            TODO: this lib cause iphone can't run
-//            implementation(libs.precompose)
+            implementation(libs.precompose)
         }
     }
 }
@@ -94,5 +94,6 @@ buildkonfig {
     // default config is required
     defaultConfigs {
         buildConfigField(FieldSpec.Type.STRING, "BASE_URL", "https://marketfake.fly.dev/")
+        buildConfigField(FieldSpec.Type.STRING, "APP_NAME", "Toko Online Fakes")
     }
 }

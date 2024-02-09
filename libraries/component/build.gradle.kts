@@ -1,5 +1,3 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -21,7 +19,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach {
         it.binaries.framework {
-            baseName = "home"
+            baseName = "component"
             isStatic = true
         }
     }
@@ -29,17 +27,15 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             //put your multiplatform dependencies here
-            implementation(projects.apis.product)
-            implementation(projects.libraries.core)
-            implementation(projects.libraries.component)
-            implementation(projects.features.productdetail)
-
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.components.resources)
+
+            implementation(projects.libraries.core)
+            implementation(projects.apis.product)
+
+            api(libs.imageLoader)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -52,7 +48,7 @@ kotlin {
 }
 
 android {
-    namespace = "abika.sinau.tokofakes.features.home"
+    namespace = "abika.sinau.tokofakes.libraries.component"
     compileSdk = 34
     defaultConfig {
         minSdk = 24

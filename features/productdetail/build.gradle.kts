@@ -28,7 +28,9 @@ kotlin {
         commonMain.dependencies {
             //put your multiplatform dependencies here
             implementation(projects.apis.product)
+
             implementation(projects.libraries.core)
+            implementation(projects.libraries.component)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
