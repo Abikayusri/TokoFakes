@@ -1,6 +1,6 @@
 package abisa.sinau.tokofakes.features.productlist
 
-import abika.sinau.tokofakes.apis.product.ProductDataSources
+import abika.sinau.tokofakes.apis.product.datasources.ProductDataSources
 import abika.sinau.tokofakes.apis.product.model.Mapper
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductItem
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductListResponse

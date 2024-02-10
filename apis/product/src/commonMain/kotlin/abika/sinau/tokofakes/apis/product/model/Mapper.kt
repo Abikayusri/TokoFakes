@@ -2,6 +2,8 @@ package abika.sinau.tokofakes.apis.product.model
 
 import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
 import abika.sinau.tokofakes.apis.product.model.category.CategoryResponse
+import abika.sinau.tokofakes.apis.product.model.productdetail.ProductDetail
+import abika.sinau.tokofakes.apis.product.model.productdetail.ProductDetailResponse
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductItem
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductListResponse
 
@@ -39,6 +41,16 @@ object Mapper {
             id = itemResponse?.id ?: 0,
             name = itemResponse?.name.orEmpty(),
             description = itemResponse?.description.orEmpty()
+        )
+    }
+
+    fun mapResponseToDetail(productDetailResponse: ProductDetailResponse.DataResponse): ProductDetail {
+        return ProductDetail(
+            id = productDetailResponse.id ?: 0,
+            name = productDetailResponse.name.orEmpty(),
+            description = productDetailResponse.description.orEmpty(),
+            price = productDetailResponse.price ?: 0.0,
+            image = productDetailResponse.images?.get(0).orEmpty()
         )
     }
 }

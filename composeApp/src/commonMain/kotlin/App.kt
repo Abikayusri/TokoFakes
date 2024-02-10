@@ -1,10 +1,8 @@
 import abika.sinau.tokofakes.apis.product.LocalProductRepository
 import abika.sinau.tokofakes.apis.product.ProductRepository
 import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
-import abika.sinau.tokofakes.features.home.Home
 import abika.sinau.tokofakes.libraries.component.component.LocalImageResource
 import abika.sinau.tokofakes.libraries.component.utils.toData
-import abika.sinau.tokofakes.libraries.component.utils.toJson
 import abika.sinau.tokofakes.libraries.core.AppConfig
 import abika.sinau.tokofakes.libraries.core.LocalAppConfig
 import abika.sinau.tokofakes.libraries.core.viewmodel.LocalViewModelHost
@@ -25,13 +23,15 @@ fun App() {
     val appConfigProviderImpl: AppConfig = remember { AppConfigProviderImpl() }
     val productRepository = remember { ProductRepository(appConfigProviderImpl) }
     val imageResourceProvider = remember { ImageResourcesProviderImpl() }
+    val tabNavigator = remember { TabNavigator() }
 
     PreComposeApp {
         CompositionLocalProvider(
             LocalViewModelHost provides viewModelHost,
             LocalAppConfig provides appConfigProviderImpl,
             LocalProductRepository provides productRepository,
-            LocalImageResource provides imageResourceProvider
+            LocalImageResource provides imageResourceProvider,
+            LocalTabNavigator provides tabNavigator
         ) {
             val navigator = rememberNavigator()
             NavHost(
@@ -42,20 +42,27 @@ fun App() {
                 scene(
                     route = "/home"
                 ) {
-                    Home(
-                        onItemClick = {
-                            navigator.navigate("/detail/${it.name}")
-                        },
-                        onCategoryClick = {
-                            val json = it.toJson()
-                            navigator.navigate("/list/$json")
-                        }
-                    )
+//                    Home(
+//                        onItemClick = {
+//                            navigator.navigate("/detail/${it.name}")
+//                        },
+//                        onCategoryClick = {
+//                            val json = it.toJson()
+//                            navigator.navigate("/list/$json")
+//                        }
+//                    )
+
+                    PagerScreen(navigator)
                 }
 
-                scene(route = "/detail/{name}") {
-                    val name = it.pathMap["name"].orEmpty()
-                    ProductDetail(name)
+                scene(route = "/detail/{id}") {
+                    val productId = it.pathMap["id"].orEmpty().toIntOrNull() ?: 0
+                    ProductDetail(
+                        id = productId,
+                        actionBack = {
+                            navigator.popBackStack()
+                        }
+                    )
                 }
 
                 scene(route = "/list/{category}") {
@@ -64,8 +71,8 @@ fun App() {
                     ProductList(
                         categoryName = data.name,
                         categoryId = data.id,
-                        onItemClick = {
-
+                        onItemClick = { productItem ->
+                            navigator.navigate("/detail/${productItem.id}")
                         },
                         actionBack = {
                             navigator.popBackStack()

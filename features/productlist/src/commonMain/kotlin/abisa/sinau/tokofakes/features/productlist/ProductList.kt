@@ -66,7 +66,6 @@ fun ProductListScreenPaging(
             )
         }
     ) {
-
         LazyColumn {
             items(pagingProduct.itemCount) { index ->
                 val item = pagingProduct[index]

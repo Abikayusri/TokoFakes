@@ -1,4 +1,4 @@
-package abika.sinau.tokofakes.apis.product
+package abika.sinau.tokofakes.apis.product.datasources
 
 import abika.sinau.tokofakes.libraries.core.AppConfig
 import abika.sinau.tokofakes.libraries.core.network.NetworkDataSource
@@ -18,6 +18,12 @@ class ProductDataSources(
     suspend fun getCategoryList(): HttpResponse {
         val endPoint = "product/category"
         delay(2000)
+        return getHttpResponse(endPoint)
+    }
+
+    suspend fun getProductDetail(productId: Int): HttpResponse {
+        val endPoint = "product/$productId"
+        delay(1000)
         return getHttpResponse(endPoint)
     }
 }

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.realm)
 }
 
 kotlin {
@@ -34,6 +35,10 @@ kotlin {
             api(libs.ktor.client.content.negotiation)
             api(libs.ktor.client.serialization)
             api(libs.ktor.client.logging)
+
+            api(libs.realm)
+            api(libs.realmKotlinSync)
+            api(libs.multiplatformSettings)
 
             implementation(compose.runtime)
             implementation(compose.foundation)

@@ -1,8 +1,11 @@
 package abika.sinau.tokofakes.apis.product
 
+import abika.sinau.tokofakes.apis.product.datasources.ProductDataSources
 import abika.sinau.tokofakes.apis.product.model.Mapper
 import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
 import abika.sinau.tokofakes.apis.product.model.category.CategoryResponse
+import abika.sinau.tokofakes.apis.product.model.productdetail.ProductDetail
+import abika.sinau.tokofakes.apis.product.model.productdetail.ProductDetailResponse
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductItem
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductListResponse
 import abika.sinau.tokofakes.libraries.core.AppConfig
@@ -17,6 +20,7 @@ class ProductRepository(
     private val dataSources by lazy {
         ProductDataSources(appConfig)
     }
+
     fun getAppName() = appConfig.appName
 
     fun getCategoryList(): Flow<Async<List<CategoryItem>>> {
@@ -47,6 +51,21 @@ class ProductRepository(
             }
         }
     }
+
+    fun getProductDetail(productId: Int): Flow<Async<ProductDetail>> {
+        return suspend { dataSources.getProductDetail(productId) }.reduce<ProductDetailResponse, ProductDetail> { response ->
+            val responseData = response.data
+
+            if (responseData == null) {
+                val throwable = Throwable("Product not found!")
+                Async.Failure(throwable)
+            } else {
+                val data = Mapper.mapResponseToDetail(responseData)
+                Async.Success(data)
+            }
+        }
+    }
 }
 
-val LocalProductRepository = compositionLocalOf<ProductRepository> { error("Product repository not provided!") }
+val LocalProductRepository =
+    compositionLocalOf<ProductRepository> { error("Product repository not provided!") }
