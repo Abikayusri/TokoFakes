@@ -45,8 +45,10 @@ kotlin {
 
             implementation(projects.apis.product)
             implementation(projects.libraries.core)
+            implementation(projects.libraries.component)
             implementation(projects.features.home)
             implementation(projects.features.productdetail)
+            implementation(projects.features.productlist)
 
 //            TODO: this lib cause iphone can't run
             implementation(libs.precompose)

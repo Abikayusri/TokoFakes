@@ -1,10 +1,13 @@
 package abika.sinau.tokofakes.features.home
 
+import abika.sinau.tokofakes.apis.product.LocalProductRepository
 import abika.sinau.tokofakes.apis.product.ProductRepository
+import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
 import abika.sinau.tokofakes.apis.product.model.productlist.ProductItem
 import abika.sinau.tokofakes.features.home.screen.CategorySection
 import abika.sinau.tokofakes.features.home.screen.HeaderSection
 import abika.sinau.tokofakes.features.home.screen.ProducByRatingSection
+import abika.sinau.tokofakes.features.home.state.HomeIntent
 import abika.sinau.tokofakes.features.home.viewmodel.HomeViewModel
 import abika.sinau.tokofakes.libraries.core.LocalAppConfig
 import abika.sinau.tokofakes.libraries.core.viewmodel.rememberViewModel
@@ -20,19 +23,31 @@ import androidx.compose.ui.Modifier
 @Composable
 fun Home(
     onItemClick: (ProductItem) -> Unit,
+    onCategoryClick: (CategoryItem) -> Unit
 ) {
-    val appConfig = LocalAppConfig.current
-    val productRepository = remember { ProductRepository(appConfig) }
+    val productRepository = LocalProductRepository.current
     val homeViewModel = rememberViewModel { HomeViewModel(productRepository) }
 
     val homeState by homeViewModel.uiState.collectAsState()
 
     Column {
         HeaderSection(homeState)
-        CategorySection(homeState)
-        ProducByRatingSection(homeState) {
-            onItemClick.invoke(it)
-        }
+        CategorySection(
+            homeState,
+            tryAgainAction = {
+                homeViewModel.sendIntent(HomeIntent.GetCategoryList)
+            },
+            onCategoryClick = onCategoryClick
+        )
+        ProducByRatingSection(
+            homeState,
+            onItemClick = {
+                onItemClick.invoke(it)
+            },
+            tryAgainAction = {
+                homeViewModel.sendIntent(HomeIntent.GetProductsByRating)
+            }
+        )
     }
 }
 

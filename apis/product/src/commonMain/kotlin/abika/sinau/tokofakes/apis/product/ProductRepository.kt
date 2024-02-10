@@ -8,6 +8,7 @@ import abika.sinau.tokofakes.apis.product.model.productlist.ProductListResponse
 import abika.sinau.tokofakes.libraries.core.AppConfig
 import abika.sinau.tokofakes.libraries.core.repository.BaseRepository
 import abika.sinau.tokofakes.libraries.core.state.Async
+import androidx.compose.runtime.compositionLocalOf
 import kotlinx.coroutines.flow.Flow
 
 class ProductRepository(
@@ -47,3 +48,5 @@ class ProductRepository(
         }
     }
 }
+
+val LocalProductRepository = compositionLocalOf<ProductRepository> { error("Product repository not provided!") }

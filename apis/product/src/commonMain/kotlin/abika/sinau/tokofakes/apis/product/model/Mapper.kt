@@ -12,7 +12,7 @@ object Mapper {
         }.orEmpty()
     }
 
-    private fun mapItemResponseToItemList(data: ProductListResponse.Data?): ProductItem {
+    fun mapItemResponseToItemList(data: ProductListResponse.Data?): ProductItem {
         return ProductItem(
             id = data?.id ?: 0,
             name = data?.name.orEmpty(),
