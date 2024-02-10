@@ -1,5 +1,6 @@
 package abika.sinau.tokofakes.apis.product.model
 
+import abika.sinau.tokofakes.apis.product.local.ProductRealm
 import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
 import abika.sinau.tokofakes.apis.product.model.category.CategoryResponse
 import abika.sinau.tokofakes.apis.product.model.productdetail.ProductDetail
@@ -51,6 +52,29 @@ object Mapper {
             description = productDetailResponse.description.orEmpty(),
             price = productDetailResponse.price ?: 0.0,
             image = productDetailResponse.images?.get(0).orEmpty()
+        )
+    }
+
+    fun realmMapFromDetail(detail: ProductDetail): ProductRealm {
+        return ProductRealm()
+            .apply {
+                id = detail.id
+                name = detail.name
+                price = detail.price
+                description = detail.description
+                image = detail.image
+            }
+    }
+
+    fun realmMapToItem(realm: ProductRealm): ProductItem {
+        return ProductItem(
+            id = realm.id,
+            name = realm.name,
+            price = realm.price,
+            image = realm.image,
+            discount = 0,
+            rating = 0.0,
+            category = CategoryItem(0, "", "")
         )
     }
 }

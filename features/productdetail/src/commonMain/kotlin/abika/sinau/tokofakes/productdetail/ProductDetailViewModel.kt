@@ -40,22 +40,22 @@ class ProductDetailViewModel(
     }
 
     private fun getProductIsFavorite(id: Int) = viewModelScope.launch {
-//        repository.isProductFavorite(id)
-//            .stateIn(this)
-//            .collectLatest {
-//                updateUiState {
-//                    copy(
-//                        isFavorite = it
-//                    )
-//                }
-//            }
+        repository.isProductFavorite(id)
+            .stateIn(this)
+            .collectLatest {
+                updateUiState {
+                    copy(
+                        isFavorite = it
+                    )
+                }
+            }
     }
 
     private fun toggleFavorite(productDetail: ProductDetail) = viewModelScope.launch {
-//        if (uiState.value.isFavorite) {
-//            repository.deleteFavorite(productDetail.id)
-//        } else {
-//            repository.insertFavorite(productDetail)
-//        }
+        if (uiState.value.isFavorite) {
+            repository.deleteFavorite(productDetail.id)
+        } else {
+            repository.insertFavorite(productDetail)
+        }
     }
 }

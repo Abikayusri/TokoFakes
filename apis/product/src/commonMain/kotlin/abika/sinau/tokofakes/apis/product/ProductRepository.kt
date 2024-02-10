@@ -1,6 +1,7 @@
 package abika.sinau.tokofakes.apis.product
 
 import abika.sinau.tokofakes.apis.product.datasources.ProductDataSources
+import abika.sinau.tokofakes.apis.product.datasources.ProductFavoriteDataSources
 import abika.sinau.tokofakes.apis.product.model.Mapper
 import abika.sinau.tokofakes.apis.product.model.category.CategoryItem
 import abika.sinau.tokofakes.apis.product.model.category.CategoryResponse
@@ -20,6 +21,8 @@ class ProductRepository(
     private val dataSources by lazy {
         ProductDataSources(appConfig)
     }
+
+    private val favoriteDataSources by lazy { ProductFavoriteDataSources() }
 
     fun getAppName() = appConfig.appName
 
@@ -65,6 +68,26 @@ class ProductRepository(
             }
         }
     }
+
+    // region realm
+
+    suspend fun getProductFavorites(): Flow<List<ProductItem>> {
+        return favoriteDataSources.getAllFavorite()
+    }
+
+    suspend fun isProductFavorite(productId: Int): Flow<Boolean> {
+        return favoriteDataSources.getProductIsFavorite(productId)
+    }
+
+    suspend fun insertFavorite(productDetail: ProductDetail) {
+        favoriteDataSources.insertProduct(productDetail)
+    }
+
+    suspend fun deleteFavorite(productId: Int) {
+        favoriteDataSources.removeProduct(productId)
+    }
+
+    // endregion
 }
 
 val LocalProductRepository =

@@ -1,4 +1,7 @@
 package abika.sinau.tokofakes.features.favorite
 
-class ProductFavoriteState {
-}
+import abika.sinau.tokofakes.apis.product.model.productlist.ProductItem
+
+data class ProductFavoriteState(
+    val productList: List<ProductItem> = emptyList()
+)

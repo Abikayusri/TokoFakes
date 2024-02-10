@@ -83,7 +83,7 @@ fun ProductDetail(
                     }
                 }
 
-                else -> {}
+                else -> Unit
             }
         }
     }
